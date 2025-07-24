@@ -1,5 +1,7 @@
 # 🏭 DemoERP - Generic ERP Demo Template
 
+**Try the live demo:** [https://erpdemo.streamlit.app/](https://erpdemo.streamlit.app/)
+
 A simple, modern ERP demo for managing Customers and Suppliers. Built with Streamlit and Python, designed for RPA automation and as a portfolio-ready template for rapid ERP prototyping.
 
 ## 🚀 Features
