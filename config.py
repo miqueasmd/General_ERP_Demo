@@ -1,49 +1,49 @@
 """
-Configuración global para ERP IPGFLEXO
-Centraliza constantes y configuraciones del sistema
+Global configuration for DemoERP
+Centralizes constants and system settings for the application.
 """
 
-# Información de la aplicación
+# Application information (name, version, description)
 APP_INFO = {
-    'name': 'ERP IPGFLEXO',
+    'name': 'DemoERP',
     'version': '1.0.0',
-    'description': 'Sistema de demostración para gestión de Clientes y Proveedores'
+    'description': 'Demo system for managing Customers and Suppliers'
 }
 
-# Colores corporativos IPGFLEXO
+# DemoERP corporate colors (UI branding)
 COLORS = {
-    'primary': '#E7343F',      # Rojo IPGFLEXO
-    'secondary': '#00356B',    # Azul marino
-    'success': '#6FE3A6',      # Verde confirmación
-    'background': '#F5F7FA',   # Fondo principal
+    'primary': '#E7343F',      # Main red (branding)
+    'secondary': '#00356B',    # Navy blue
+    'success': '#6FE3A6',      # Confirmation green
+    'background': '#F5F7FA',   # Main background
     'white': '#ffffff'
 }
 
-# Configuración de la aplicación
+# Streamlit app configuration (page title, layout, sidebar)
 STREAMLIT_CONFIG = {
-    'page_title': 'ERP IPGFLEXO',
+    'page_title': 'DemoERP',
     'layout': 'wide',
     'initial_sidebar_state': 'expanded'
 }
 
-# Mensajes del sistema
+# System messages (UI feedback for user actions)
 MESSAGES = {
-    'loading': '⏳ Cargando datos...',
-    'success_save': '✅ ¡Registro guardado con éxito!',
-    'error_save': '❌ Error al guardar el registro',
-    'demo_loaded': '✅ Formulario rellenado con datos de demostración',
-    'no_records': 'ℹ️ No hay registros disponibles',
-    'validation_error': '❌ Por favor, completa todos los campos obligatorios'
+    'loading': '⏳ Loading data...',
+    'success_save': '✅ Record saved successfully!',
+    'error_save': '❌ Error saving the record',
+    'demo_loaded': '✅ Form filled with demo data',
+    'no_records': 'ℹ️ No records available',
+    'validation_error': '❌ Please complete all required fields'
 }
 
-# Configuración de base de datos
+# Database configuration (CSV directory, backup options)
 DATABASE_CONFIG = {
     'csv_dir': 'data',
     'backup_enabled': True,
-    'auto_backup_interval': 24  # horas
+    'auto_backup_interval': 24  # hours
 }
 
-# Límites del sistema
+# System limits (display, file size, description length)
 LIMITS = {
     'max_records_display': 1000,
     'max_file_size_mb': 10,

@@ -1,174 +1,95 @@
-# 🏭 ERP Ficticio IPGFLEXO - Demo
+# 🏭 DemoERP - Generic ERP Demo Template
 
-Sistema de demostración para gestión de Clientes y Proveedores, diseñado con interfaz simple y optimizado para automatización RPA.
+A simple, modern ERP demo for managing Customers and Suppliers. Built with Streamlit and Python, designed for RPA automation and as a portfolio-ready template for rapid ERP prototyping.
 
-## 🎯 Características Principales
+## 🚀 Features
+- **Intuitive UI**: Clean, responsive interface for easy data entry and review
+- **Full CRUD**: Manage Orders, Delivery Notes, and Invoices for both Customers and Suppliers
+- **Dual Persistence**: Use local CSV files or connect to PostgreSQL (Neon)
+- **RPA-Ready**: Optimized for automation tools (e.g., Power Automate Desktop)
+- **Demo Data**: Quickly fill forms with realistic sample data
+- **Easy Customization**: Modular code, clear structure, and full English documentation
 
-- **Interfaz Simple**: Diseñada específicamente para automatización con Power Automate Desktop
-- **Gestión Completa**: Manejo de Pedidos, Albaranes y Facturas para Clientes y Proveedores  
-- **Persistencia Dual**: Soporte para CSV local o PostgreSQL (Neon) remoto
-- **Branding Corporativo**: Colores y estilo de IPGFLEXO
-- **Edición en Tiempo Real**: Tablas editables con validación automática
+## 🛠️ Quick Start
 
-## 🚀 Instalación y Ejecución
+### Requirements
+- Python 3.8+
+- pip
 
-### Requisitos Previos
-- Python 3.8 o superior
-- pip (gestor de paquetes de Python)
-
-### Pasos de Instalación
-
-1. **Clonar o descargar el proyecto**
-   ```bash
-   cd IPGFLEXO_DemoERP
-   ```
-
-2. **Instalar dependencias**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Ejecutar la aplicación**
-   ```bash
-   streamlit run erp_demo.py
-   ```
-
-4. **Abrir en navegador**
-   - La aplicación se abrirá automáticamente en `http://localhost:8501`
-   - Si no se abre automáticamente, copia la URL que aparece en terminal
-
-## 🔧 Configuración
-
-### Modo CSV (Por Defecto)
-La aplicación usa archivos CSV en la carpeta `./data/` para persistencia.
-No requiere configuración adicional.
-
-### Modo PostgreSQL (Opcional)
-Para usar PostgreSQL con Neon, configura estas variables de entorno:
-
+### Installation
 ```bash
-# Windows (PowerShell)
-$env:USE_NEON = "1"
-$env:PGHOST = "tu-host.neon.tech"
-$env:PGUSER = "tu-usuario"
-$env:PGPASSWORD = "tu-password"
-$env:PGDATABASE = "tu-database"
+# Clone the repository
+cd General_ERP_Demo
 
-# Linux/Mac
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+streamlit run erp_demo.py
+```
+
+The app will open at [http://localhost:8501](http://localhost:8501).
+
+### Data Storage Modes
+- **CSV (default):** Data is stored in the `./data/` folder (auto-created).
+- **PostgreSQL (Neon):** Set environment variables to enable remote DB (see below).
+
+#### PostgreSQL Environment Variables
+```bash
+# Example (Linux/Mac)
 export USE_NEON=1
-export PGHOST=tu-host.neon.tech
-export PGUSER=tu-usuario
-export PGPASSWORD=tu-password
-export PGDATABASE=tu-database
+export PGHOST=your-neon-host
+export PGUSER=your-user
+export PGPASSWORD=your-password
+export PGDATABASE=your-db
 ```
 
-## 📋 Estructura de Datos
+## 🐳 Run with Docker
 
-Cada registro en el ERP contiene los siguientes campos:
+You can run DemoERP in a container for easy deployment:
 
-| Campo | Descripción | Tipo |
-|-------|-------------|------|
-| Num_Pedido | Número único del pedido | Texto |
-| Nombre_Emisor | Nombre del cliente/proveedor | Texto |
-| Cod_Emisor | Código del emisor | Texto |
-| Estado | Estado del pedido (Pendiente/Comprobado) | Selección |
-| En_ERP | Si está en el ERP (Sí/No) | Selección |
-| Fecha_Pedido | Fecha del pedido (DD/MM/AAAA) | Fecha (texto) |
-| Fecha_Entrega | Fecha de entrega prevista (DD/MM/AAAA) | Fecha (texto) |
-| Cod_Art_EAN | Código EAN del artículo | Texto |
-| Cod_Art_Comprador | Código del comprador | Texto |
-| Descripcion | Descripción del pedido | Texto largo |
-| Cantidad | Cantidad solicitada | Número |
-| Tipo | Tipo de producto | Texto |
-| Tipo_Cliche | Tipo de cliché | Texto |
-| Papel | Tipo de papel | Texto |
-| Cod_IPG | Código IPG interno | Texto |
-| PDF_Link | Enlace al PDF del pedido | URL |
-
-## 🎨 Personalización Visual
-
-### Colores Corporativos IPGFLEXO
-- **Rojo Principal**: #E7343F (botones, acentos)
-- **Azul Marino**: #00356B (cabeceras, sidebar)
-- **Verde Confirmación**: #6FE3A6 (estado "Comprobado")
-- **Fondo Principal**: #F5F7FA
-
-### Logo Personalizado
-Para añadir el logo de IPGFLEXO:
-1. Coloca tu archivo de logo en la carpeta del proyecto
-2. Edita `erp_demo.py` línea ~87 (buscar "Logo placeholder")
-3. Reemplaza la línea con: `st.image("tu-logo.png", use_column_width=True)`
-
-## 🤖 Optimización para RPA
-
-### Power Automate Desktop
-La interfaz está optimizada para automatización:
-
-- **IDs estables**: Todos los campos tienen IDs únicos y consistentes
-- **Selectores CSS**: Elementos con clases CSS específicas para localización fácil
-- **Botones prominentes**: Acciones principales claramente identificables
-- **Validación mínima**: Reduce errores en automatización
-
-### Principales Selectores para RPA:
-
-```css
-/* Formulario de entrada */
-input[aria-label="Número de Pedido"]
-input[aria-label="Nombre del Emisor"] 
-div[data-testid="stSelectbox"] /* Para dropdowns */
-button[kind="primary"] /* Botón guardar */
-
-/* Navegación */
-input[type="radio"][value="Clientes"]
-input[type="radio"][value="Pedidos"]
-
-/* Tabla de datos */
-div[data-testid="stDataFrame"]
+```dockerfile
+# Dockerfile (already compatible)
+FROM python:3.10-slim
+WORKDIR /app
+COPY . .
+RUN pip install --no-cache-dir -r requirements.txt
+EXPOSE 8501
+CMD ["streamlit", "run", "erp_demo.py", "--server.port=8501", "--server.address=0.0.0.0"]
 ```
 
-## 📁 Estructura del Proyecto
-
-```
-IPGFLEXO_DemoERP/
-├── erp_demo.py           # Aplicación principal Streamlit
-├── database.py           # Lógica de persistencia (CSV/PostgreSQL)
-├── requirements.txt      # Dependencias de Python
-├── .streamlit/
-│   └── config.toml      # Configuración de tema
-├── data/                # Archivos CSV (auto-generados)
-│   ├── pedidos_clientes.csv
-│   ├── albaranes_clientes.csv
-│   └── ...
-└── README.md            # Este archivo
+### Build and Run
+```bash
+docker build -t demoerp .
+docker run -p 8501:8501 demoerp
 ```
 
-## 🛠️ Desarrollo y Extensión
+> For PostgreSQL, pass environment variables with `-e` or use a `.env` file.
 
-### Añadir Nuevas Secciones
-1. Edita `erp_demo.py` en la función `main()`
-2. Añade lógica similar a la sección "Pedidos"
-3. Los datos se guardarán automáticamente según el patrón `{subseccion}_{seccion}.csv`
+## 📁 Project Structure
+```
+General_ERP_Demo/
+├── erp_demo.py           # Main Streamlit app
+├── database.py           # Data persistence logic (CSV/PostgreSQL)
+├── config.py             # Global config and constants
+├── modules/
+│   ├── form_entry.py     # Form UI logic
+│   ├── table_view.py     # Table view/edit logic
+│   ├── demo_data.py      # Demo/sample data
+│   └── ui_layout.py      # UI layout and branding
+├── requirements.txt      # Python dependencies
+├── .gitignore            # Git exclusions
+├── data/                 # Local CSV data (auto-generated)
+└── README.md             # This file
+```
 
-### Personalizar Campos
-1. Modifica `COLUMN_SCHEMA` en `database.py`
-2. Actualiza el formulario en `mostrar_formulario_entrada()`
-3. Ajusta la configuración de columnas en `mostrar_datos_existentes()`
+## ✨ Customization
+- Add new sections/types: Extend `erp_demo.py` and `modules/`
+- Change fields: Edit `COLUMN_SCHEMA` in `database.py` and update forms/tables
+- UI/branding: Adjust `modules/ui_layout.py` and `config.py`
 
-## 📞 Soporte
+## 📄 License
+This project is for demo and educational purposes. All data is fictitious.
 
-Para preguntas sobre este sistema de demostración:
-- **Proyecto**: Demo ERP para IPGFLEXO
-- **Propósito**: Demostración de capacidades de desarrollo
-- **Framework**: Streamlit + Python + Pandas
-
-## 📝 Licencia
-
-Este es un proyecto de demostración. Todos los datos son ficticios y el sistema está diseñado únicamente para propósitos de demostración.
-
-## 📝 Notas sobre el formulario y mensajes de confirmación
-
-- El campo de fecha en el formulario es un campo de texto, y debe introducirse en formato DD/MM/AAAA (por ejemplo, 20/06/2025).
-- El formato de fecha en el CSV y en la visualización también es DD/MM/AAAA.
-- Esto facilita la automatización y la entrada manual, evitando problemas de localización o pop-ups de calendario.
-- Al guardar un registro en el formulario, debería aparecer un mensaje de confirmación "✅ ¡Registro añadido con éxito!" justo debajo del formulario.
-- Si no ves el mensaje de confirmación, el registro igualmente se guarda correctamente. Puedes comprobarlo en la pestaña "Ver/Editar Registros".
+## 👤 Author & Contact
+Created by [Miqueas Molina](https://miqueasmd.github.io/)

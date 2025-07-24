@@ -1,4 +1,9 @@
+# Requirements for DemoERP
+# Streamlit: Web app framework for Python
 streamlit>=1.35.0
+# Pandas: Data analysis and manipulation
 pandas>=2.0.0
+# SQLAlchemy: Database ORM for Python
 sqlalchemy>=2.0.0
+# psycopg2-binary: PostgreSQL driver (for Neon/PostgreSQL support)
 psycopg2-binary>=2.9.0

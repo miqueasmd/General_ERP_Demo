@@ -1,221 +1,71 @@
+"""
+Demo data module for DemoERP
+Provides sample data for demo/testing purposes.
+"""
 import pandas as pd
 
-def crear_datos_demo_sharepoint():
-    datos_demo = [
+def create_demo_data():
+    """
+    Returns a DataFrame with sample demo data for the ERP form.
+    Used to quickly fill the form with realistic but fictitious data.
+    """
+    demo_data = [
+        # Example demo records (can be extended)
         {
-            'Num_Pedido': '81746731',
-            'Nombre_Emisor': 'PLAT. AGURAIN',
-            'Cod_Emisor': '8480010021264',
+            'Num_Pedido': '100001',
+            'Nombre_Emisor': 'Demo Company A',
+            'Cod_Emisor': '1234567890123',
             'Fecha_Pedido': '2025-06-12',
             'Fecha_Entrega': '2025-06-18',
-            'Cod_Art_EAN': '8437005309067',
-            'Cod_Art_Comprador': '15625833',
-            'Descripcion': 'PAPEL REGALO INFANTIL 2X07',
-            'Cantidad': 1600,
-            'Tipo': 'Rollo papel regalo',
-            'Tipo_Cliche': 'Cliche',
+            'Cod_Art_EAN': '1111111111111',
+            'Cod_Art_Comprador': 'A-0001',
+            'Descripcion': 'Sample product order 1',
+            'Cantidad': 1000,
+            'Tipo': 'Roll',
+            'Tipo_Cliche': 'Standard',
             'Papel': 'Kraft',
-            'Cod_IPG': '300399991562C01',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/EXWOOXc1cjpLup8R5dJqeBgBTS9-8BZxXdckyWdE30hh9g'
+            'Cod_IPG': 'DEMO1001',
+            'PDF_Link': 'https://demoerp.com/sample1.pdf'
         },
         {
-            'Num_Pedido': '79945201',
-            'Nombre_Emisor': 'CORTE INGLES',
-            'Cod_Emisor': '8422416000016',
-            'Fecha_Pedido': '2025-06-02',
-            'Fecha_Entrega': '2025-07-14',
-            'Cod_Art_EAN': '0000000000000',
-            'Cod_Art_Comprador': '200 00015',
-            'Descripcion': '1 UNI - ROLLOS PAPEL REGALO ECI 62CMS P',
-            'Cantidad': 1500,
-            'Tipo': 'Rollo papel regalo',
-            'Tipo_Cliche': 'Cliché',
-            'Papel': 'Estucado',
-            'Cod_IPG': '300399992062C02',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/Ec6O50ejw49FhzaFq_9trpYBhvJfedY5_MOed8UHeCZKpQ'
-        },
-        {
-            'Num_Pedido': '002613973',
-            'Nombre_Emisor': 'DIA RETAIL ESPAÑA SA',
-            'Cod_Emisor': '8480017930019',
-            'Fecha_Pedido': '2025-06-20',
-            'Fecha_Entrega': '2025-06-27',
-            'Cod_Art_EAN': '8437005309197',
-            'Cod_Art_Comprador': '198412',
-            'Descripcion': 'PAPEL REGALO "FANTAS SIN M 2MT',
-            'Cantidad': 1600,
-            'Tipo': 'Rollo papel regalo',
-            'Tipo_Cliche': 'Cliché',
-            'Papel': 'Reciclado',
-            'Cod_IPG': '300399981962C03',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/EaM9ColtqDZPvdYFb-LxXVABNNjpvXbXokUs55PxSupxOw'
-        },
-        {
-            'Num_Pedido': '79945201',
-            'Nombre_Emisor': 'CORTE INGLES',
-            'Cod_Emisor': '8422416000016',
-            'Fecha_Pedido': '2025-06-02',
-            'Fecha_Entrega': '2025-07-14',
-            'Cod_Art_EAN': '0000000000000',
-            'Cod_Art_Comprador': '200 00023',
-            'Descripcion': '1 UNI - ROLLOS PAPEL REGALO ECI 84CMS P',
+            'Num_Pedido': '100002',
+            'Nombre_Emisor': 'Demo Company B',
+            'Cod_Emisor': '9876543210987',
+            'Fecha_Pedido': '2025-06-15',
+            'Fecha_Entrega': '2025-06-20',
+            'Cod_Art_EAN': '2222222222222',
+            'Cod_Art_Comprador': 'B-0002',
+            'Descripcion': 'Sample product order 2',
             'Cantidad': 500,
-            'Tipo': 'Rollo papel regalo',
-            'Tipo_Cliche': 'Camisa',
-            'Papel': 'Blanco',
-            'Cod_IPG': '300399992084C01',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/Ec6O50ejw49FhzaFq_9trpYBhvJfedY5_MOed8UHeCZKpQ'
+            'Tipo': 'Sheet',
+            'Tipo_Cliche': 'Custom',
+            'Papel': 'White',
+            'Cod_IPG': 'DEMO1002',
+            'PDF_Link': 'https://demoerp.com/sample2.pdf'
         },
         {
-            'Num_Pedido': '79926701',
-            'Nombre_Emisor': 'CORTE INGLES',
-            'Cod_Emisor': '8422416000016',
-            'Fecha_Pedido': '2025-05-05',
-            'Fecha_Entrega': '2025-05-06',
-            'Cod_Art_EAN': '0000000000000',
-            'Cod_Art_Comprador': '103 00060',
-            'Descripcion': '1 UNI - BOLSAS PAPEL REGALO(CAJA 500) P',
-            'Cantidad': 300,
-            'Tipo': 'Bolsa',
-            'Tipo_Cliche': 'Cliché',
-            'Papel': 'Kraft',
-            'Cod_IPG': '300899992050C01',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/EXp8aiRxkPNAq3UkxMUVxQEBunKOQ8ZWFLyW_uZuXpvjMQ'
-        },
-        {
-            'Num_Pedido': '79945201',
-            'Nombre_Emisor': 'CORTE INGLES',
-            'Cod_Emisor': '8422416000016',
-            'Fecha_Pedido': '2025-06-02',
-            'Fecha_Entrega': '2025-07-14',
-            'Cod_Art_EAN': '0000000000000',
-            'Cod_Art_Comprador': '200 00031',
-            'Descripcion': '1 UNI - ROLLOS PAPEL EMPAQUETADO 62 CT P',
-            'Cantidad': 120,
-            'Tipo': 'Rollo papel empaquetado',
-            'Tipo_Cliche': 'Cliché',
-            'Papel': 'Estucado',
-            'Cod_IPG': '300399992062C03',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/Ec6O50ejw49FhzaFq_9trpYBhvJfedY5_MOed8UHeCZKpQ'
-        },
-        {
-            'Num_Pedido': '79945201',
-            'Nombre_Emisor': 'CORTE INGLES',
-            'Cod_Emisor': '8422416000016',
-            'Fecha_Pedido': '2025-06-02',
-            'Fecha_Entrega': '2025-07-14',
-            'Cod_Art_EAN': '0000000000000',
-            'Cod_Art_Comprador': '200 00239',
-            'Descripcion': '1 UNI - PAPEL REGALO INFANTIL/BEBES PAPE',
-            'Cantidad': 300,
-            'Tipo': 'Rollo papel regalo',
-            'Tipo_Cliche': 'Cliché',
-            'Papel': 'Reciclado',
-            'Cod_IPG': '300399992062C04',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/Ec6O50ejw49FhzaFq_9trpYBhvJfedY5_MOed8UHeCZKpQ'
-        },
-        {
-            'Num_Pedido': '79945201',
-            'Nombre_Emisor': 'CORTE INGLES',
-            'Cod_Emisor': '8422416000016',
-            'Fecha_Pedido': '2025-06-02',
-            'Fecha_Entrega': '2025-07-14',
-            'Cod_Art_EAN': '0000000000000',
-            'Cod_Art_Comprador': '103 00029',
-            'Descripcion': '1 UNI - BOLSAS PAPEL REGALO(CAJA 1000) P',
-            'Cantidad': 100,
-            'Tipo': 'Bolsa',
-            'Tipo_Cliche': 'Cliché',
-            'Papel': 'Blanco',
-            'Cod_IPG': '300899992010C01',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/Ec6O50ejw49FhzaFq_9trpYBhvJfedY5_MOed8UHeCZKpQ'
-        },
-        {
-            'Num_Pedido': '79945201',
-            'Nombre_Emisor': 'CORTE INGLES',
-            'Cod_Emisor': '8422416000016',
-            'Fecha_Pedido': '2025-06-02',
-            'Fecha_Entrega': '2025-07-14',
-            'Cod_Art_EAN': '0000000000000',
-            'Cod_Art_Comprador': '103 00037',
-            'Descripcion': '1 UNI - BOLSAS PAPEL REGALO(CAJA 1000) P',
-            'Cantidad': 100,
-            'Tipo': 'Bolsa',
-            'Tipo_Cliche': 'Cliché',
-            'Papel': 'Blanco',
-            'Cod_IPG': '300899992010C01',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/Ec6O50ejw49FhzaFq_9trpYBhvJfedY5_MOed8UHeCZKpQ'
-        },
-        {
-            'Num_Pedido': '79945201',
-            'Nombre_Emisor': 'CORTE INGLES',
-            'Cod_Emisor': '8422416000016',
-            'Fecha_Pedido': '2025-06-02',
-            'Fecha_Entrega': '2025-07-14',
-            'Cod_Art_EAN': '0000000000000',
-            'Cod_Art_Comprador': '103 00045',
-            'Descripcion': '1 UNI - BOLSAS PAPEL REGALO(CAJA 500) P',
-            'Cantidad': 100,
-            'Tipo': 'Bolsa',
-            'Tipo_Cliche': 'Cliché',
-            'Papel': 'Blanco',
-            'Cod_IPG': '300899992010C01',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/Ec6O50ejw49FhzaFq_9trpYBhvJfedY5_MOed8UHeCZKpQ'
-        },
-        {
-            'Num_Pedido': '79945201',
-            'Nombre_Emisor': 'CORTE INGLES',
-            'Cod_Emisor': '8422416000016',
-            'Fecha_Pedido': '2025-06-02',
-            'Fecha_Entrega': '2025-07-14',
-            'Cod_Art_EAN': '0000000000000',
-            'Cod_Art_Comprador': '103 00052',
-            'Descripcion': '1 UNI - BOLSAS PAPEL REGALO(CAJA 500) P',
-            'Cantidad': 150,
-            'Tipo': 'Bolsa',
-            'Tipo_Cliche': 'Cliché',
-            'Papel': 'Blanco',
-            'Cod_IPG': '300899992010C01',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/Ec6O50ejw49FhzaFq_9trpYBhvJfedY5_MOed8UHeCZKpQ'
-        },
-        {
-            'Num_Pedido': '79945201',
-            'Nombre_Emisor': 'CORTE INGLES',
-            'Cod_Emisor': '8422416000016',
-            'Fecha_Pedido': '2025-06-02',
-            'Fecha_Entrega': '2025-07-14',
-            'Cod_Art_EAN': '0000000000000',
-            'Cod_Art_Comprador': '103 00060',
-            'Descripcion': '1 UNI - BOLSAS PAPEL REGALO(CAJA 500) P',
-            'Cantidad': 250,
-            'Tipo': 'Bolsa',
-            'Tipo_Cliche': 'Cliché',
-            'Papel': 'Blanco',
-            'Cod_IPG': '300899992010C01',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/Ec6O50ejw49FhzaFq_9trpYBhvJfedY5_MOed8UHeCZKpQ'
-        },
-        {
-            'Num_Pedido': '79945201',
-            'Nombre_Emisor': 'CORTE INGLES',
-            'Cod_Emisor': '8422416000016',
-            'Fecha_Pedido': '2025-06-02',
-            'Fecha_Entrega': '2025-07-14',
-            'Cod_Art_EAN': '0000000000000',
-            'Cod_Art_Comprador': '230 00400',
-            'Descripcion': '1 UNI - PAPEL CAMISAS/ JERSEY 80G P/500 P',
-            'Cantidad': 400,
-            'Tipo': 'Camisa',
-            'Tipo_Cliche': 'Jersey',
-            'Papel': 'Blanco',
-            'Cod_IPG': '300399992080C01',
-            'PDF_Link': 'https://truegroup.sharepoint.com/:b:/s/AI_Builder_IPGFLEXO/Ec6O50ejw49FhzaFq_9trpYBhvJfedY5_MOed8UHeCZKpQ'
+            'Num_Pedido': '100003',
+            'Nombre_Emisor': 'Demo Company C',
+            'Cod_Emisor': '1928374650912',
+            'Fecha_Pedido': '2025-06-18',
+            'Fecha_Entrega': '2025-06-25',
+            'Cod_Art_EAN': '3333333333333',
+            'Cod_Art_Comprador': 'C-0003',
+            'Descripcion': 'Sample product order 3',
+            'Cantidad': 750,
+            'Tipo': 'Box',
+            'Tipo_Cliche': 'Premium',
+            'Papel': 'Recycled',
+            'Cod_IPG': 'DEMO1003',
+            'PDF_Link': 'https://demoerp.com/sample3.pdf'
         }
     ]
-    for d in datos_demo:
+    # Convert date format to DD/MM/YYYY for display
+    for d in demo_data:
         if 'Fecha_Pedido' in d and '-' in d['Fecha_Pedido']:
             y, m, d_ = d['Fecha_Pedido'].split('-')
             d['Fecha_Pedido'] = f"{d_}/{m}/{y}"
         if 'Fecha_Entrega' in d and '-' in d['Fecha_Entrega']:
             y, m, d_ = d['Fecha_Entrega'].split('-')
             d['Fecha_Entrega'] = f"{d_}/{m}/{y}"
-    return pd.DataFrame(datos_demo) 
+    return pd.DataFrame(demo_data) 

@@ -1,12 +1,19 @@
+"""
+UI layout and branding module for DemoERP
+Sets up Streamlit page config, main header, and sidebar logo with branding.
+"""
 import streamlit as st
 
 def set_page_config():
+    """
+    Configure Streamlit page settings and inject custom CSS for DemoERP branding.
+    """
     st.set_page_config(
-        page_title="ERP IPGFLEXO",
+        page_title="DemoERP",
         layout="wide",
         initial_sidebar_state="expanded"
     )
-    # Inyección de CSS para branding corporativo IPGFLEXO
+    # Inject CSS for DemoERP branding
     st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
@@ -28,17 +35,23 @@ def set_page_config():
         .stSelectbox > div > div { border-color: #00356B44; }
         .stTextInput > div > div > input { border-color: #00356B44; }
         .section-header { background: linear-gradient(90deg, #00356B11 0%, transparent 100%); padding: 0.5rem 1rem; border-left: 4px solid #E7343F; margin: 1rem 0; }
-        .stTextInput label:has-text("*"), .stSelectbox label:has-text("*"), .stTextArea label:has-text("*"), .stNumberInput label:has-text("*"), .stDateInput label:has-text("*") { color: #E7343F !important; font-weight: 600 !important; }
+        .stTextInput label:has-text("*"), .stSelectbox label:has-text("*"), .stTextArea label:has-text("*"), .stNumberInput label:has-text("*"), .stDateInput label:has-text("*"), .stTextInput label:has(*), .stSelectbox label:has(*), .stTextArea label:has(*), .stNumberInput label:has(*), .stDateInput label:has(*) { color: #E7343F !important; font-weight: 600 !important; }
         div[data-testid="stTextInput"]:has(label:contains("*")) input, div[data-testid="stSelectbox"]:has(label:contains("*")) > div, div[data-testid="stTextArea"]:has(label:contains("*")) textarea, div[data-testid="stNumberInput"]:has(label:contains("*")) input, div[data-testid="stDateInput"]:has(label:contains("*")) input { border-color: #E7343F44 !important; box-shadow: 0 0 0 1px rgba(231, 52, 63, 0.1) !important; }
         </style>
     """, unsafe_allow_html=True)
 
 def main_header():
+    """
+    Render the main header for the DemoERP app.
+    """
     st.markdown("""
         <div class='main-header'>
-            <h1>🏭 IPGFLEXO ERP</h1>
+            <h1>🏭 DemoERP</h1>
         </div>
     """, unsafe_allow_html=True)
 
 def sidebar_logo():
-    st.markdown('<div class="sidebar-logo"><h2>🏭 IPGFLEXO</h2></div>', unsafe_allow_html=True) 
+    """
+    Render the sidebar logo for DemoERP branding.
+    """
+    st.markdown('<div class="sidebar-logo"><h2>🏭 DemoERP</h2></div>', unsafe_allow_html=True) 

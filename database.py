@@ -1,6 +1,6 @@
 """
-Módulo de gestión de base de datos para ERP Ficticio IPGFLEXO
-Maneja tanto persistencia en CSV como conexión opcional a PostgreSQL (Neon)
+Database management module for DemoERP
+Handles both CSV persistence and optional PostgreSQL (Neon) connection
 """
 import os
 import pandas as pd
@@ -12,10 +12,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
-# Configuración de columnas para todas las tablas
+# Column configuration for all tables
 COLUMN_SCHEMA = {
     'numPedido': 'Num_Pedido',
-    'nombreEmisor': 'Nombre_Emisor', 
+    'nombreEmisor': 'Nombre_Emisor',
     'codEmisor': 'Cod_Emisor',
     'fechaPedido': 'Fecha_Pedido',
     'fechaEntrega': 'Fecha_Entrega',
@@ -30,11 +30,11 @@ COLUMN_SCHEMA = {
     'pdfLink': 'PDF_Link'
 }
 
-# SQLAlchemy Base para PostgreSQL
+# SQLAlchemy Base for PostgreSQL
 Base = declarative_base()
 
 class ERPRecord(Base):
-    """Modelo base para registros del ERP"""
+    """Base model for DemoERP records"""
     __abstract__ = True
     
     id = Column(Integer, primary_key=True)
@@ -53,44 +53,44 @@ class ERPRecord(Base):
     codIpg = Column(String(50))
     pdfLink = Column(String(500))
 
-# Modelos específicos para cada tabla
-class PedidosClientes(ERPRecord):
+# Specific models for each table
+class OrdersCustomers(ERPRecord):
     __tablename__ = 'pedidos_clientes'
 
-class AlbaranesClientes(ERPRecord):
+class DeliveryNotesCustomers(ERPRecord):
     __tablename__ = 'albaranes_clientes'
 
-class FacturasClientes(ERPRecord):
+class InvoicesCustomers(ERPRecord):
     __tablename__ = 'facturas_clientes'
 
-class PedidosProveedores(ERPRecord):
+class OrdersSuppliers(ERPRecord):
     __tablename__ = 'pedidos_proveedores'
 
-class AlbaranesProveedores(ERPRecord):
+class DeliveryNotesSuppliers(ERPRecord):
     __tablename__ = 'albaranes_proveedores'
 
-class FacturasProveedores(ERPRecord):
+class InvoicesSuppliers(ERPRecord):
     __tablename__ = 'facturas_proveedores'
 
 class CSVBackend:
-    """Backend de persistencia usando archivos CSV"""
+    """Persistence backend using CSV files"""
     
     def __init__(self, data_dir: str = "data"):
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(exist_ok=True)
     
     def get_empty_dataframe(self) -> pd.DataFrame:
-        """Retorna un DataFrame vacío con las columnas correctas"""
+        """Returns an empty DataFrame with the correct columns"""
         columns = list(COLUMN_SCHEMA.values())
         return pd.DataFrame(columns=columns)
     
     def load_data(self, table_name: str) -> pd.DataFrame:
-        """Carga datos desde CSV o retorna DataFrame vacío si no existe"""
+        """Loads data from CSV or returns an empty DataFrame if not found"""
         file_path = self.data_dir / f"{table_name}.csv"
         try:
             if file_path.exists():
                 df = pd.read_csv(file_path, dtype=str)
-                # Convertir fechas a formato DD/MM/YYYY
+                # Convert dates to DD/MM/YYYY format
                 if 'Fecha_Pedido' in df.columns:
                     df['Fecha_Pedido'] = pd.to_datetime(df['Fecha_Pedido'], errors='coerce', dayfirst=True).dt.strftime('%d/%m/%Y')
                 if 'Fecha_Entrega' in df.columns:
@@ -104,18 +104,18 @@ class CSVBackend:
             else:
                 return self.get_empty_dataframe()
         except Exception as e:
-            print(f"Error cargando {table_name}: {e}")
+            print(f"Error loading {table_name}: {e}")
             return self.get_empty_dataframe()
     
     def save_data(self, table_name: str, dataframe: pd.DataFrame) -> bool:
-        """Guarda DataFrame en archivo CSV"""
+        """Saves DataFrame to CSV file"""
         file_path = self.data_dir / f"{table_name}.csv"
         try:
             df_to_save = dataframe.copy()
             for col in df_to_save.columns:
                 if col not in ['Fecha_Pedido', 'Fecha_Entrega', 'Cantidad']:
                     df_to_save[col] = df_to_save[col].astype(str)
-            # Guardar fechas en formato DD/MM/YYYY
+            # Save dates in DD/MM/YYYY format
             if 'Fecha_Pedido' in df_to_save.columns:
                 df_to_save['Fecha_Pedido'] = pd.to_datetime(df_to_save['Fecha_Pedido'], errors='coerce', dayfirst=True).dt.strftime('%d/%m/%Y')
             if 'Fecha_Entrega' in df_to_save.columns:
@@ -123,23 +123,23 @@ class CSVBackend:
             df_to_save.to_csv(file_path, index=False)
             return True
         except Exception as e:
-            print(f"Error guardando {table_name}: {e}")
+            print(f"Error saving {table_name}: {e}")
             return False
 
 class PgBackend:
-    """Backend de persistencia usando PostgreSQL (Neon)"""
+    """Persistence backend using PostgreSQL (Neon)"""
     
     def __init__(self):
-        # Variables de entorno para conexión
+        # Environment variables for connection
         self.host = os.getenv('PGHOST')
         self.user = os.getenv('PGUSER') 
         self.password = os.getenv('PGPASSWORD')
         self.database = os.getenv('PGDATABASE')
         
         if not all([self.host, self.user, self.password, self.database]):
-            raise ValueError("Faltan variables de entorno para PostgreSQL")
+            raise ValueError("Missing environment variables for PostgreSQL connection")
         
-        # Crear engine y sesión
+        # Create engine and session
         self.engine = create_engine(
             f"postgresql://{self.user}:{self.password}@{self.host}/{self.database}"
         )
@@ -148,40 +148,37 @@ class PgBackend:
         self.session = Session()
     
     def get_model_class(self, table_name: str):
-        """Retorna la clase modelo correspondiente al nombre de tabla"""
+        """Returns the model class corresponding to the table name"""
         model_map = {
-            'pedidos_clientes': PedidosClientes,
-            'albaranes_clientes': AlbaranesClientes,
-            'facturas_clientes': FacturasClientes,
-            'pedidos_proveedores': PedidosProveedores,
-            'albaranes_proveedores': AlbaranesProveedores,
-            'facturas_proveedores': FacturasProveedores
+            'pedidos_clientes': OrdersCustomers,
+            'albaranes_clientes': DeliveryNotesCustomers,
+            'facturas_clientes': InvoicesCustomers,
+            'pedidos_proveedores': OrdersSuppliers,
+            'albaranes_proveedores': DeliveryNotesSuppliers,
+            'facturas_proveedores': InvoicesSuppliers
         }
         return model_map.get(table_name)
     
     def load_data(self, table_name: str) -> pd.DataFrame:
-        """Carga datos desde PostgreSQL"""
+        """Loads data from PostgreSQL"""
         try:
             query = f"SELECT * FROM {table_name}"
             df = pd.read_sql(query, self.engine)
-            
-            # Renombrar columnas a formato display
+            # Rename columns to display format
             column_rename = {k: v for k, v in COLUMN_SCHEMA.items() if k in df.columns}
             df = df.rename(columns=column_rename)
-            
             return df
         except Exception as e:
-            print(f"Error cargando desde PostgreSQL {table_name}: {e}")
+            print(f"Error loading from PostgreSQL {table_name}: {e}")
             return pd.DataFrame(columns=list(COLUMN_SCHEMA.values()))
     
     def save_data(self, table_name: str, dataframe: pd.DataFrame) -> bool:
-        """Guarda DataFrame en PostgreSQL"""
+        """Saves DataFrame to PostgreSQL"""
         try:
-            # Renombrar columnas de display a nombres de BD
+            # Rename display columns to DB names
             reverse_mapping = {v: k for k, v in COLUMN_SCHEMA.items()}
             df_to_save = dataframe.rename(columns=reverse_mapping)
-            
-            # Limpiar tabla y insertar nuevos datos
+            # Clear table and insert new data
             model_class = self.get_model_class(table_name)
             if model_class:
                 self.session.query(model_class).delete()
@@ -190,42 +187,42 @@ class PgBackend:
                 return True
             return False
         except Exception as e:
-            print(f"Error guardando en PostgreSQL {table_name}: {e}")
+            print(f"Error saving to PostgreSQL {table_name}: {e}")
             if self.session:
                 self.session.rollback()
             return False
 
 class TableManager:
-    """Gestor principal para manejo de tablas del ERP"""
+    """Main manager for DemoERP table operations"""
     
     def __init__(self):
-        # Seleccionar backend según variable de entorno
+        # Select backend based on environment variable
         self.use_neon = os.getenv('USE_NEON', '').lower() in ('1', 'true', 'yes')
         
         if self.use_neon:
             try:
                 self.backend = PgBackend()
-                print("✅ Conectado a PostgreSQL (Neon)")
+                print("✅ Connected to PostgreSQL (Neon)")
             except Exception as e:
-                print(f"⚠️ Error conectando a PostgreSQL, usando CSV: {e}")
+                print(f"⚠️ Error connecting to PostgreSQL, using CSV: {e}")
                 self.backend = CSVBackend()
-                self.use_neon = False  # Actualizar estado
+                self.use_neon = False  # Update state
         else:
             self.backend = CSVBackend()
-            print("📁 Usando persistencia CSV")
+            print("📁 Using CSV persistence")
     
-    def get_dataframe(self, seccion: str, subseccion: str) -> pd.DataFrame:
-        """Obtiene DataFrame para una sección/subsección específica"""
-        table_name = f"{subseccion}_{seccion}".lower()
+    def get_dataframe(self, section: str, subsection: str) -> pd.DataFrame:
+        """Gets DataFrame for a specific section/subsection"""
+        table_name = f"{subsection}_{section}".lower()
         return self.backend.load_data(table_name)
     
-    def save_dataframe(self, seccion: str, subseccion: str, dataframe: pd.DataFrame) -> bool:
-        """Guarda DataFrame para una sección/subsección específica"""
-        table_name = f"{subseccion}_{seccion}".lower()
+    def save_dataframe(self, section: str, subsection: str, dataframe: pd.DataFrame) -> bool:
+        """Saves DataFrame for a specific section/subsection"""
+        table_name = f"{subsection}_{section}".lower()
         return self.backend.save_data(table_name, dataframe)
     
     def get_empty_dataframe(self) -> pd.DataFrame:
-        """Retorna DataFrame vacío con estructura correcta"""
+        """Returns an empty DataFrame with the correct structure"""
         if hasattr(self.backend, 'get_empty_dataframe'):
             return self.backend.get_empty_dataframe()
         else:
